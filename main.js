@@ -72,30 +72,49 @@ function renderProducts() {
     const grid = document.getElementById('mainGrid');
     if (grid.innerHTML !== '') return;
     
-    const dummyImg = "https://cafe24img.poxo.com/meetkmi0/web/product/medium/202603/f592c40a2b4ac6a5a5831c69427baee8.gif";
+    const productImages = [
+        "https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1584315260170-6593f49f6974?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1551854838-212c20b52504?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1506629082925-fe69850937a4?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1582552938382-79357599059b?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1516762689617-e1cff93988f5?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1475178626620-a4d074967452?auto=format&fit=crop&w=600&q=80"
+    ];
+
     const productNames = [
-        "에어라이트 스트레이트 밴딩 팬츠",
-        "프리미엄 코튼 릴렉스드 슬랙스",
-        "어반 테크니컬 카고 조거",
-        "데일리 에센셜 치노 팬츠",
-        "윈터 써멀 플리스 라인드 팬츠"
+        "시그니처 로우 데님 팬츠",
+        "프리미엄 테이퍼드 치노",
+        "하이웨이스트 와이드 슬랙스",
+        "어반 빈티지 스트레이트 진",
+        "클래식 드레스 트라우저",
+        "테크니컬 카고 조거",
+        "린넨 블렌드 릴렉스 팬츠",
+        "모던 슬림핏 코튼 팬츠",
+        "스트릿 나일론 트랙 팬츠",
+        "워크웨어 카펜터 팬츠"
     ];
 
     let html = '';
     for(let i = 1; i <= 30; i++) {
-        const name = productNames[i % productNames.length];
-        const price = 39000 + (i * 1000);
-        // staggered animation delay calculation
+        const imgIndex = (i - 1) % productImages.length;
+        const nameIndex = (i - 1) % productNames.length;
+        const img = productImages[imgIndex];
+        const name = productNames[nameIndex];
+        const price = 45000 + (Math.floor(Math.random() * 20) * 1000);
         const delay = (i - 1) * 0.05; 
         
         html += `
         <div class="item reveal" style="animation-delay: ${delay}s">
-            <div class="img-box"><img src="${dummyImg}" loading="lazy"></div>
+            <div class="img-box"><img src="${img}" loading="lazy"></div>
             <div class="info">
                 <div class="brand">ONLYPANTS</div>
                 <div class="name">${name} Vol.${i}</div>
                 <div class="price-area">
-                    <span class="sale">10%</span>
+                    <span class="sale">NEW</span>
                     <span class="price">₩${price.toLocaleString()}</span>
                 </div>
             </div>
