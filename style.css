@@ -2,19 +2,21 @@
     --blue: #00aff0; 
     --bg-color: #fff;
     --text-color: #111;
-    --header-bg: rgba(255, 255, 255, 0.95);
+    --header-bg: rgba(255, 255, 255, 0.85);
     --grid-bg: #fff;
     --item-bg: #f9f9f9;
     --brand-color: #bbb;
     --name-color: #333;
     --border-color: #eee;
     --price-color: #000;
+    /* Trendy transition timing */
+    --theme-transition: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 [data-theme="dark"] {
     --bg-color: #111;
     --text-color: #f5f5f5;
-    --header-bg: rgba(17, 17, 17, 0.95);
+    --header-bg: rgba(17, 17, 17, 0.85);
     --grid-bg: #111;
     --item-bg: #1a1a1a;
     --brand-color: #666;
@@ -29,7 +31,8 @@ body {
     background: #000; 
     font-family: 'Pretendard', -apple-system, sans-serif; 
     overflow: hidden; 
-    transition: background 1.5s ease, color 0.3s ease; 
+    /* Initial section transition remains slow for premium feel */
+    transition: background 1.5s ease; 
 }
 
 /* 전 페이지 스르륵 전환 효과 */
@@ -41,7 +44,7 @@ body {
 }
 .section.active { opacity: 1; visibility: visible; }
 
-/* [1] 인트로 - bg.jpg를 상대 경로로 설정 */
+/* [1] 인트로 */
 #intro { 
     background: #000 url('bg.jpg') no-repeat center center;
     background-size: contain; z-index: 1000;
@@ -49,12 +52,6 @@ body {
 .logo { font-size: 42px; font-weight: 900; color: #fff; margin-bottom: 30px; letter-spacing: -1.5px; text-align: center; }
 .logo span { color: var(--blue); }
 
-/* 🔥 반짝이 버튼 */
-@keyframes glowingAnimation {
-    0% { box-shadow: 0 0 10px rgba(0, 175, 240, 0.7); transform: scale(1); }
-    50% { box-shadow: 0 0 40px rgba(0, 175, 240, 0.9), 0 0 80px rgba(0, 175, 240, 1), 0 0 15px #fff; transform: scale(1.05); }
-    100% { box-shadow: 0 0 10px rgba(0, 175, 240, 0.7); transform: scale(1); }
-}
 .btn { 
     background: var(--blue); color: #fff; border: none; padding: 22px 70px; 
     font-size: 22px; font-weight: 800; border-radius: 60px; cursor: pointer;
@@ -71,81 +68,80 @@ video {
     -webkit-mask-image: radial-gradient(circle, black 50%, rgba(0,0,0,0) 100%);
 }
 
-/* [3] 쇼핑몰 */
+/* [3] 쇼핑몰 - Trendy Transition Refinement */
 #shop { 
-    display: block; background: var(--bg-color); overflow-y: auto; z-index: 100; 
-    flex-direction: column; justify-content: flex-start;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    background-blend-mode: overlay;
-    transition: background 0.3s ease;
+    display: block; 
+    background: var(--bg-color); 
+    overflow-y: auto; 
+    z-index: 100; 
+    flex-direction: column; 
+    justify-content: flex-start;
+    /* Isolate noise from background-color transition to prevent artifacts */
+    position: relative;
+    transition: background var(--theme-transition);
 }
+
+/* Noise texture separated to avoid "analog TV" blending artifacts during transition */
+#shop::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    opacity: 0.05;
+}
+
 #shop.section { position: absolute; }
 
 .header { 
-    position: sticky; top: 0; width: 100%; background: var(--header-bg); 
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid var(--border-color); padding: 20px 30px; z-index: 10001;
+    position: sticky; top: 0; width: 100%; 
+    background: var(--header-bg); 
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-bottom: 1px solid var(--border-color); 
+    padding: 20px 30px; 
+    z-index: 10001;
     display: flex; align-items: center; justify-content: space-between;
+    transition: background var(--theme-transition), border-color var(--theme-transition);
 }
-.home-logo { color: var(--text-color); font-weight: 900; font-size: 28px; cursor: pointer; letter-spacing: -1px; text-decoration: none; }
+
+.home-logo { 
+    color: var(--text-color); 
+    font-weight: 900; font-size: 28px; cursor: pointer; letter-spacing: -1px; text-decoration: none;
+    transition: color var(--theme-transition);
+}
 .home-logo span { color: var(--blue); }
 
-/* 테마 토글 버튼 스타일 */
-.theme-switch-wrapper {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
+.theme-switch-wrapper { display: flex; align-items: center; gap: 12px; }
 .theme-char {
-    width: 44px;
-    height: 44px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
     font-size: 28px;
     background: var(--item-bg);
     border-radius: 50%;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), background var(--theme-transition), box-shadow var(--theme-transition);
 }
-.theme-char:hover {
-    transform: scale(1.1);
-}
+
 .theme-label {
-    font-size: 14px;
-    font-weight: 800;
+    font-size: 14px; font-weight: 800;
     color: var(--text-color);
-    transition: color 0.3s ease;
+    transition: color var(--theme-transition);
     user-select: none;
 }
+
 .theme-switch {
-  display: inline-block;
-  height: 26px;
-  position: relative;
-  width: 50px;
+  display: inline-block; height: 26px; position: relative; width: 50px;
 }
 .theme-switch input { display:none; }
 .slider {
-  background-color: #ccc;
-  bottom: 0;
-  cursor: pointer;
-  left: 0;
-  position: absolute;
-  right: 0;
-  top: 0;
-  transition: .4s;
-  border-radius: 34px;
+  background-color: #ccc; bottom: 0; cursor: pointer; left: 0; position: absolute; right: 0; top: 0;
+  transition: .4s; border-radius: 34px;
 }
 .slider:before {
-  background-color: #fff;
-  bottom: 4px;
-  content: "";
-  height: 18px;
-  left: 4px;
-  position: absolute;
-  transition: .4s;
-  width: 18px;
-  border-radius: 50%;
+  background-color: #fff; bottom: 4px; content: ""; height: 18px; left: 4px; position: absolute;
+  transition: .4s; width: 18px; border-radius: 50%;
 }
 input:checked + .slider { background-color: var(--blue); }
 input:checked + .slider:before { transform: translateX(24px); }
@@ -155,6 +151,7 @@ input:checked + .slider:before { transform: translateX(24px); }
     grid-template-columns: repeat(5, 1fr);
     gap: 20px 12px;
     max-width: 1400px; margin: 0 auto; padding: 40px 20px;
+    position: relative; z-index: 2;
 }
 
 /* 프리미엄 엔트리 효과 */
@@ -169,30 +166,50 @@ input:checked + .slider:before { transform: translateX(24px); }
 }
 
 .img-box { 
-    width: 100%; aspect-ratio: 3/4; background: var(--item-bg); overflow: hidden; margin-bottom: 12px; 
-    border-radius: 4px;
+    width: 100%; aspect-ratio: 3/4; 
+    background: var(--item-bg); 
+    overflow: hidden; margin-bottom: 12px; 
+    border-radius: 8px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-    transition: box-shadow 0.3s ease, background 0.3s ease;
+    transition: box-shadow 0.3s ease, background var(--theme-transition);
 }
 .item:hover .img-box {
-    box-shadow: 0 12px 40px rgba(0, 175, 240, 0.15);
+    box-shadow: 0 12px 40px rgba(0, 175, 240, 0.2);
 }
 .item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
 .item:hover img { transform: scale(1.08); }
 
 .info { padding: 0 5px; }
-.brand { font-size: 10px; color: var(--brand-color); font-weight: bold; margin-bottom: 4px; text-transform: uppercase; }
-.name { font-size: 13px; color: var(--name-color); font-weight: 400; line-height: 1.4; margin-bottom: 8px; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.brand { 
+    font-size: 10px; color: var(--brand-color); font-weight: bold; margin-bottom: 4px; text-transform: uppercase; 
+    transition: color var(--theme-transition);
+}
+.name { 
+    font-size: 13px; color: var(--name-color); font-weight: 400; line-height: 1.4; margin-bottom: 8px; height: 36px; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; 
+    transition: color var(--theme-transition);
+}
 
-.price-area { display: flex; align-items: center; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 8px; }
+.price-area { 
+    display: flex; align-items: center; gap: 6px; border-top: 1px solid var(--border-color); padding-top: 8px; 
+    transition: border-color var(--theme-transition);
+}
 .sale { color: var(--blue); font-weight: 800; font-size: 14px; }
-.price { color: var(--price-color); font-weight: 800; font-size: 14px; }
+.price { 
+    color: var(--price-color); font-weight: 800; font-size: 14px; 
+    transition: color var(--theme-transition);
+}
 
-/* 모바일 대응 (2열로 변경) */
+/* 모바일 대응 */
 @media (max-width: 768px) {
     .grid { grid-template-columns: repeat(2, 1fr); }
     .logo { font-size: 32px; }
     .btn { padding: 18px 50px; font-size: 18px; }
     .header { padding: 15px 20px; }
     .theme-char { width: 36px; height: 36px; font-size: 22px; }
+}
+
+@keyframes glowingAnimation {
+    0% { box-shadow: 0 0 10px rgba(0, 175, 240, 0.7); transform: scale(1); }
+    50% { box-shadow: 0 0 40px rgba(0, 175, 240, 0.9), 0 0 80px rgba(0, 175, 240, 1), 0 0 15px #fff; transform: scale(1.05); }
+    100% { box-shadow: 0 0 10px rgba(0, 175, 240, 0.7); transform: scale(1); }
 }
