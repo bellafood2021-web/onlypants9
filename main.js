@@ -1,11 +1,38 @@
 const v = document.getElementById('mainV');
 const playButton = document.getElementById('playButton');
 const homeLogo = document.getElementById('homeLogo');
+const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+
+// 테마 관리
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark') {
+        toggleSwitch.checked = true;
+    }
+}
+
+function switchTheme(e) {
+    if (e.target.checked) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+        localStorage.setItem('theme', 'light');
+    }    
+}
+
+toggleSwitch.addEventListener('change', switchTheme, false);
 
 function changeSection(id) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
     document.getElementById(id).classList.add('active');
-    document.body.style.background = (id === 'shop') ? '#fff' : '#000';
+    // 쇼핑몰 진입 시 바디 배경 처리 (테마에 따라 변수 활용 가능하도록 수정 고려)
+    if (id === 'shop') {
+        document.body.style.background = 'var(--bg-color)';
+    } else {
+        document.body.style.background = '#000';
+    }
 }
 
 function startPlay() {
