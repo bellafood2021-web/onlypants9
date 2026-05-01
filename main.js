@@ -3,29 +3,38 @@ const playButton = document.getElementById('playButton');
 const homeLogo = document.getElementById('homeLogo');
 const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
 const themeLabel = document.getElementById('theme-label');
+const themeChar = document.getElementById('theme-char');
 
 // 테마 관리
 const currentTheme = localStorage.getItem('theme');
+
+function updateThemeUI(theme) {
+    if (theme === 'dark') {
+        if (themeLabel) themeLabel.textContent = "밤이";
+        // 밤이 캐릭터 컨셉: 💪👸 (수건 남자는 없어서 강인함과 여왕으로 대체 표현)
+        if (themeChar) themeChar.innerHTML = "💪"; 
+    } else {
+        if (themeLabel) themeLabel.textContent = "낮져";
+        // 낮져 캐릭터 컨셉: 🙇‍♂️👠 (엎드린 남자와 하이힐로 대체 표현)
+        if (themeChar) themeChar.innerHTML = "🙇‍♂️";
+    }
+}
+
 if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
     if (currentTheme === 'dark') {
         toggleSwitch.checked = true;
-        if (themeLabel) themeLabel.textContent = "밤이";
-    } else {
-        if (themeLabel) themeLabel.textContent = "낮져";
     }
+    updateThemeUI(currentTheme);
+} else {
+    updateThemeUI('light');
 }
 
 function switchTheme(e) {
-    if (e.target.checked) {
-        document.documentElement.setAttribute('data-theme', 'dark');
-        localStorage.setItem('theme', 'dark');
-        if (themeLabel) themeLabel.textContent = "밤이";
-    } else {
-        document.documentElement.setAttribute('data-theme', 'light');
-        localStorage.setItem('theme', 'light');
-        if (themeLabel) themeLabel.textContent = "낮져";
-    }    
+    const theme = e.target.checked ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('theme', theme);
+    updateThemeUI(theme);
 }
 
 toggleSwitch.addEventListener('change', switchTheme, false);
