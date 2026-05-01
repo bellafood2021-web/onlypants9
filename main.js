@@ -2,6 +2,7 @@ const v = document.getElementById('mainV');
 const playButton = document.getElementById('playButton');
 const homeLogo = document.getElementById('homeLogo');
 const toggleSwitch = document.querySelector('.theme-switch input[type="checkbox"]');
+const themeLabel = document.getElementById('theme-label');
 
 // 테마 관리
 const currentTheme = localStorage.getItem('theme');
@@ -9,6 +10,9 @@ if (currentTheme) {
     document.documentElement.setAttribute('data-theme', currentTheme);
     if (currentTheme === 'dark') {
         toggleSwitch.checked = true;
+        if (themeLabel) themeLabel.textContent = "밤이";
+    } else {
+        if (themeLabel) themeLabel.textContent = "낮져";
     }
 }
 
@@ -16,9 +20,11 @@ function switchTheme(e) {
     if (e.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
         localStorage.setItem('theme', 'dark');
+        if (themeLabel) themeLabel.textContent = "밤이";
     } else {
         document.documentElement.setAttribute('data-theme', 'light');
         localStorage.setItem('theme', 'light');
+        if (themeLabel) themeLabel.textContent = "낮져";
     }    
 }
 

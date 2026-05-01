@@ -94,7 +94,14 @@ video {
 .theme-switch-wrapper {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
+}
+.theme-label {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--text-color);
+    transition: color 0.3s ease;
+    user-select: none;
 }
 .theme-switch {
   display: inline-block;
