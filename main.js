@@ -29,19 +29,32 @@ function showShop() {
 function renderProducts() {
     const grid = document.getElementById('mainGrid');
     if (grid.innerHTML !== '') return;
-    // 임시 이미지는 외부 링크이므로 그대로 유지
+    
     const dummyImg = "https://cafe24img.poxo.com/meetkmi0/web/product/medium/202603/f592c40a2b4ac6a5a5831c69427baee8.gif";
+    const productNames = [
+        "에어라이트 스트레이트 밴딩 팬츠",
+        "프리미엄 코튼 릴렉스드 슬랙스",
+        "어반 테크니컬 카고 조거",
+        "데일리 에센셜 치노 팬츠",
+        "윈터 써멀 플리스 라인드 팬츠"
+    ];
+
     let html = '';
     for(let i = 1; i <= 30; i++) {
+        const name = productNames[i % productNames.length];
+        const price = 39000 + (i * 1000);
+        // staggered animation delay calculation
+        const delay = (i - 1) * 0.05; 
+        
         html += `
-        <div class="item">
-            <div class="img-box"><img src="${dummyImg}"></div>
+        <div class="item reveal" style="animation-delay: ${delay}s">
+            <div class="img-box"><img src="${dummyImg}" loading="lazy"></div>
             <div class="info">
                 <div class="brand">ONLYPANTS</div>
-                <div class="name">에어라이트 스트레이트 밴딩 팬츠 Vol.${i}</div>
+                <div class="name">${name} Vol.${i}</div>
                 <div class="price-area">
                     <span class="sale">10%</span>
-                    <span class="price">₩39,000</span>
+                    <span class="price">₩${price.toLocaleString()}</span>
                 </div>
             </div>
         </div>`;

@@ -52,11 +52,12 @@
 
 ### 4.2. 실행 단계
 
-*   **1단계: 시각적 스타일 고도화 (CSS)**
+*   **1단계: 시각적 스타일 및 인터랙션 고도화 (CSS/JS)**
+    *   **프리미엄 이미지 엔트리 효과:** 첫 상품 렌더링 시, 단순히 나타나는 것이 아니라 브랜드 톤에 맞춘 세련된 애니메이션(Blur-to-Focus, Staggered Slide-up)을 적용합니다.
     *   **텍스처 적용:** 메인 배경에 미세한 노이즈 텍스처를 추가하여 고급스러운 질감을 부여합니다.
     *   **깊이감 강화:** 상품 카드에 다층 드롭 섀도우(Multi-layered drop shadows)를 적용하여 "떠 있는" 듯한 효과를 줍니다.
     *   **컬러 및 타이포그래피:** `oklch()` 컬러 공간을 활용하여 더 생생한 블루 포인트를 적용하고, 서체 강조(Hero text, Section headlines)를 통해 가독성을 개선합니다.
-    *   **Cascade Layers (`@layer`):** CSS 구조를 초기화(base), 레이아웃(layout), 컴포넌트(components), 유틸리티(utils) 레이어로 분리하여 관리합니다.
+    *   **Cascade Layers (@layer):** CSS 구조를 초기화(base), 레이아웃(layout), 컴포넌트(components), 유틸리티(utils) 레이어로 분리하여 관리합니다.
 
 *   **2단계: 웹 컴포넌트 도입 (JS)**
     *   **`<pant-item>` 컴포넌트 생성:** 각 상품 항목을 독립적인 Web Component로 캡슐화합니다.

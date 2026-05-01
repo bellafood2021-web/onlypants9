@@ -46,11 +46,14 @@ video {
 #shop { 
     display: block; background: #fff; overflow-y: auto; z-index: 100; 
     flex-direction: column; justify-content: flex-start;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    background-blend-mode: overlay;
 }
 #shop.section { position: absolute; }
 
 .header { 
-    position: sticky; top: 0; width: 100%; background: #fff; 
+    position: sticky; top: 0; width: 100%; background: rgba(255, 255, 255, 0.95); 
+    backdrop-filter: blur(10px);
     border-bottom: 1px solid #eee; padding: 30px; z-index: 10001;
     display: flex; align-items: center; justify-content: center;
 }
@@ -64,10 +67,28 @@ video {
     max-width: 1400px; margin: 0 auto; padding: 40px 20px;
 }
 
-.item { cursor: pointer; }
-.img-box { width: 100%; aspect-ratio: 3/4; background: #f9f9f9; overflow: hidden; margin-bottom: 12px; }
-.item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
-.item:hover img { transform: scale(1.1); }
+/* 프리미엄 엔트리 효과 */
+@keyframes imageReveal {
+    0% { opacity: 0; filter: blur(20px); transform: translateY(40px) scale(0.95); }
+    100% { opacity: 1; filter: blur(0); transform: translateY(0) scale(1); }
+}
+
+.item { cursor: pointer; opacity: 0; }
+.item.reveal {
+    animation: imageReveal 1.2s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.img-box { 
+    width: 100%; aspect-ratio: 3/4; background: #f9f9f9; overflow: hidden; margin-bottom: 12px; 
+    border-radius: 4px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    transition: box-shadow 0.3s ease;
+}
+.item:hover .img-box {
+    box-shadow: 0 12px 40px rgba(0, 175, 240, 0.15);
+}
+.item img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+.item:hover img { transform: scale(1.08); }
 
 .info { padding: 0 5px; }
 .brand { font-size: 10px; color: #bbb; font-weight: bold; margin-bottom: 4px; text-transform: uppercase; }
