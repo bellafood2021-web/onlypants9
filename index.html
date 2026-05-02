@@ -31,6 +31,7 @@
         <div class="header">
             <div id="homeLogo" class="home-logo">ONLY<span>PANTS</span></div>
             <div class="theme-switch-wrapper">
+                <a href="#inquiry" class="nav-link">제휴문의</a>
                 <div id="theme-char" class="theme-char"></div>
                 <span id="theme-label" class="theme-label">낮져</span>
                 <label class="theme-switch" for="checkbox">
@@ -40,6 +41,35 @@
             </div>
         </div>
         <div class="grid" id="mainGrid"></div>
+
+        <!-- 제휴 문의 섹션 -->
+        <section id="inquiry" class="inquiry-section">
+            <div class="inquiry-container">
+                <h2 class="inquiry-title">PARTNERSHIP <span>INQUIRY</span></h2>
+                <p class="inquiry-desc">ONLYPANTS와 함께할 파트너를 찾습니다. 제휴 및 협업 문의를 남겨주세요.</p>
+                
+                <form id="inquiry-form" action="https://formspree.io/f/xaqvnzqv" method="POST" class="inquiry-form">
+                    <div class="form-group">
+                        <label for="name">성함 / 업체명</label>
+                        <input type="text" id="name" name="name" placeholder="홍길동" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">이메일 주소</label>
+                        <input type="email" id="email" name="email" placeholder="example@onlypants.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">문의 내용</label>
+                        <textarea id="message" name="message" rows="5" placeholder="협업 제안 내용을 상세히 입력해주세요." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">문의하기</button>
+                    <div id="form-status" class="form-status"></div>
+                </form>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <p>&copy; 2024 ONLYPANTS. All Rights Reserved.</p>
+        </footer>
     </div>
 
     <script src="main.js"></script>

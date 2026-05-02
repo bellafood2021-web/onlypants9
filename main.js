@@ -128,3 +128,63 @@ playButton.addEventListener('click', startPlay);
 homeLogo.addEventListener('click', () => {
     location.reload();
 });
+// 제휴 문의 폼 처리
+const inquiryForm = document.getElementById('inquiry-form');
+const formStatus = document.getElementById('form-status');
+
+if (inquiryForm) {
+    inquiryForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        const submitBtn = inquiryForm.querySelector('.submit-btn');
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = '보내는 중...';
+        formStatus.textContent = '';
+
+        try {
+            const response = await fetch(e.target.action, {
+                method: inquiryForm.method,
+                body: data,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            
+            if (response.ok) {
+                formStatus.style.color = 'var(--blue)';
+                formStatus.textContent = '문의가 성공적으로 전달되었습니다. 감사합니다!';
+                inquiryForm.reset();
+                submitBtn.textContent = '문의 완료';
+            } else {
+                const result = await response.json();
+                if (Object.hasOwn(result, 'errors')) {
+                    formStatus.style.color = '#ff4b2b';
+                    formStatus.textContent = result.errors.map(error => error.message).join(", ");
+                } else {
+                    throw new Error();
+                }
+                submitBtn.disabled = false;
+                submitBtn.textContent = '다시 시도';
+            }
+        } catch (error) {
+            formStatus.style.color = '#ff4b2b';
+            formStatus.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해주세요.';
+            submitBtn.disabled = false;
+            submitBtn.textContent = '다시 시도';
+        }
+    });
+}
+
+// 부드러운 스크롤 (Anchor Link)
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+            target.scrollIntoView({
+                behavior: 'smooth'
+            });
+        }
+    });
+});
